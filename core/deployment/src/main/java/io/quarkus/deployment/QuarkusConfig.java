@@ -82,11 +82,13 @@ public final class QuarkusConfig extends SimpleBuildItem {
         return asBoolean(val, configKey);
     }
 
+    @SuppressWarnings("BoxedPrimitiveConstructor") // https://errorprone.info/bugpattern/BoxedPrimitiveConstructor
     public static Boolean getBoxedBoolean(String configKey, String defaultValue, boolean allowNull) {
         Optional<String> res = ConfigProvider.getConfig().getOptionalValue(configKey, String.class);
         String val = res.orElse(defaultValue);
         Boolean result;
-        if (val == null || val.isEmpty()) {
+        if (val == null ||
+                val.isEmpty()) {
             if (!allowNull) {
                 throw requiredConfigMissing(configKey);
             }
@@ -111,6 +113,7 @@ public final class QuarkusConfig extends SimpleBuildItem {
         return asInteger(val, configKey);
     }
 
+    @SuppressWarnings("BoxedPrimitiveConstructor") // https://errorprone.info/bugpattern/BoxedPrimitiveConstructor
     public static Integer getBoxedInt(String configKey, String defaultValue, boolean allowNull) {
         Optional<String> res = ConfigProvider.getConfig().getOptionalValue(configKey, String.class);
         String val = res.orElse(defaultValue);
