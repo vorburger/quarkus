@@ -26,9 +26,9 @@ USER 1001
 
 COPY pom.xml /home/quarkus-dev/
 COPY src /home/quarkus-dev/src
-RUN mvn compile
-# ^^^ running Maven once during container creation already pre-loads Maven dependencies into ~/.m2, which is very useful to start faster after
-# TODO we should also run "mvn quarkus:dev", but kill it, once it's up...
+
+COPY mvn-go-offline.sh /home/quarkus-dev/
+RUN cd /home/quarkus-dev/ ; ./mvn-go-offline.sh ; rm /home/quarkus-dev/mvn-go-offline.sh
 
 # https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
 USER root
