@@ -22,6 +22,9 @@ ENV JAVA_HOME /etc/alternatives/java_sdk
 
 RUN adduser -u 1001 quarkus-dev
 WORKDIR /home/quarkus-dev/
+# https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
+RUN chgrp -R 0 /home/quarkus-dev && \
+    chmod -R g=u /home/quarkus-dev
 USER 1001
 
 COPY pom.xml /home/quarkus-dev/
@@ -29,10 +32,6 @@ COPY src /home/quarkus-dev/src
 RUN mvn compile
 # ^^^ running Maven once during container creation already pre-loads Maven dependencies into ~/.m2, which is very useful to start faster after
 # TODO we should also run "mvn quarkus:dev", but kill it, once it's up...
-
-# https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
-RUN chgrp -R 0 /home/quarkus-dev && \
-    chmod -R g=u /home/quarkus-dev
 
 CMD ["mvn", "compile", "quarkus:dev"]
 
