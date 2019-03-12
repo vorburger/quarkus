@@ -30,6 +30,10 @@ RUN mvn compile
 # ^^^ running Maven once during container creation already pre-loads Maven dependencies into ~/.m2, which is very useful to start faster after
 # TODO we should also run "mvn quarkus:dev", but kill it, once it's up...
 
+# https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
+RUN chgrp -R 0 /home/quarkus-dev && \
+    chmod -R g=u /home/quarkus-dev
+
 CMD ["mvn", "compile", "quarkus:dev"]
 
 EXPOSE 8080
