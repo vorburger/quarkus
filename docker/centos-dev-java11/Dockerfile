@@ -27,7 +27,7 @@ USER 1001
 COPY pom.xml /home/quarkus-dev/
 COPY src /home/quarkus-dev/src
 
-COPY mvn-go-offline.sh /home/quarkus-dev/
+COPY *.sh /home/quarkus-dev/
 RUN cd /home/quarkus-dev/ ; ./mvn-go-offline.sh ; rm /home/quarkus-dev/mvn-go-offline.sh
 
 # https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
@@ -36,9 +36,7 @@ RUN chgrp -R 0 /home/quarkus-dev && \
     chmod -R g=u /home/quarkus-dev
 USER 1001
 
-CMD ["mvn", "compile", "quarkus:dev"]
+CMD ["bash", "-c", "/home/quarkus-dev/mvn-run-dev.sh"]
 
 EXPOSE 8080
-
-# TODO Come up with some black magic whichcraft which restarts 'mvn compile quarkus:dev' whenever the pom.xml changes...
 
