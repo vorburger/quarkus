@@ -27,15 +27,15 @@
 
     <dependencies>
         <!-- List all Quarkus extensions here, just so that they are pre-loaded into ~/.m2 in this image -->
-        <!-- TODO add everything listed on 'mvn quarkus:list-extensions' here... -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
+        <!-- TODO add everything listed on 'mvn quarkus:list-extensions' here...
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-agroal</artifactId>
-        </dependency>
+        </dependency>  -->
         <!-- No Test dependencies here (because we only run 'mvn compile quarkus:dev') -->
     </dependencies>
 
