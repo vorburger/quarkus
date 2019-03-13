@@ -10,7 +10,7 @@ TODO
 
 ### OpenShift Build (one time)
 
-    oc new-build https://github.com/quarkusio/quarkus.git --context-dir=docker/centos-dev-java11 --name quarkus-dev
+    oc new-build https://github.com/quarkusio/quarkus.git --context-dir=docker/centos-dev-java11/container --name quarkus-dev
     oc logs -f bc/quarkus-dev
 
 ### OpenShift Use (every time)
@@ -34,6 +34,8 @@ TODO
 
 You can map local code into this container, just to avoiding having to have a JVM and Maven installed, like so:
 
+    docker build container/ -t quarkus-dev
+
     git clone https://github.com/quarkusio/quarkus-quickstarts
     cd quarkus-quickstarts/getting-started
 
@@ -43,7 +45,7 @@ NB: The `z` suffix -v mount flag and `-u` option are required to correctly map t
 
 ## Local Testing (only for development of this container itself)
 
-    docker build . -t quarkus-dev
+    docker build container/ -t quarkus-dev
 
     docker run --rm -it quarkus-dev bash
     docker run --rm -it -p 8080:8080 quarkus-dev

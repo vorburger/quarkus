@@ -4,7 +4,7 @@
 
 set -ex
 
-docker build . -t quarkus-dev
+docker build container/ -t quarkus-dev
 
 container_id=$(docker run --name quarkus-dev-test -d --rm -p 8080 quarkus-dev)
 http_port="$(docker port ${container_id} 8080 | sed 's/0.0.0.0://')"
