@@ -20,26 +20,25 @@ ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 ENV JAVA_HOME /etc/alternatives/java_sdk
 
-RUN adduser -u 9999 quarkus-dev
-WORKDIR /home/quarkus-dev/
+RUN adduser -u 9999 quarkus
+WORKDIR /home/quarkus/
 USER 9999
 
-COPY pom.xml /home/quarkus-dev/
-COPY src /home/quarkus-dev/src
+COPY pom.xml /home/quarkus/
+COPY src /home/quarkus/src
 
-COPY *.sh /home/quarkus-dev/
-RUN cd /home/quarkus-dev/ && \
+COPY *.sh /home/quarkus/
+RUN cd /home/quarkus/ && \
     ./mvn-go-offline.sh && \
-    rm /home/quarkus-dev/mvn-go-offline.sh
+    rm /home/quarkus/mvn-go-offline.sh
 
 # https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
 USER root
-RUN mv /home/quarkus-dev/mvn-run-dev.sh /usr/local/bin
-RUN chgrp -R 0 /home/quarkus-dev && \
-    chmod -R g=u /home/quarkus-dev
+RUN mv /home/quarkus/mvn-run-dev.sh /usr/local/bin
+RUN chgrp -R 0 /home/quarkus && \
+    chmod -R g=u /home/quarkus
 USER 9999
 
 CMD ["bash", "-c", "/usr/local/bin/mvn-run-dev.sh"]
 
 EXPOSE 8080
-
