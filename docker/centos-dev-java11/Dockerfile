@@ -28,7 +28,9 @@ COPY pom.xml /home/quarkus-dev/
 COPY src /home/quarkus-dev/src
 
 COPY *.sh /home/quarkus-dev/
-RUN cd /home/quarkus-dev/ ; ./mvn-go-offline.sh ; rm /home/quarkus-dev/mvn-go-offline.sh
+RUN cd /home/quarkus-dev/ && \
+    ./mvn-go-offline.sh && \
+    rm /home/quarkus-dev/mvn-go-offline.sh
 
 # https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
 USER root
