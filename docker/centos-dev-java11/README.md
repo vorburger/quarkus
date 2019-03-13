@@ -20,6 +20,7 @@ TODO
 
     git clone https://github.com/quarkusio/quarkus-quickstarts
     cd quarkus-quickstarts/getting-started
+    mvn clean
     DEV_POD=$(TODO)
     oc rsync . DEV_POD:/home/quarkus-dev/
 
@@ -29,7 +30,18 @@ TODO
     sed -i 's/hello /hello live reloading /' src/main/java/org/acme/quickstart/GreetingService.java
     curl http://localhost:8080/hello/greeting/quarkus
 
-## Local Testing
+## Local Dev without Java & Maven using Docker
+
+You can map local code into this container, just to avoiding having to have a JVM and Maven installed, like so:
+
+    git clone https://github.com/quarkusio/quarkus-quickstarts
+    cd quarkus-quickstarts/getting-started
+
+    docker run --rm -it -p 8080:8080 -v $(pwd):/home/quarkus-dev/:z -u `id -u $USER`:`id -g $USER` quarkus-dev
+
+NB: The `z` suffix -v mount flag and `-u` option are required to correctly map the file ownership in/out of the container.
+
+## Local Testing (only for development of this container itself)
 
     docker build . -t quarkus-dev
 
