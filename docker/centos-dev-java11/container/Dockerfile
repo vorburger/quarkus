@@ -20,15 +20,15 @@ ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 ENV JAVA_HOME /etc/alternatives/java_sdk
 
-RUN adduser -u 9999 quarkus
-WORKDIR /home/quarkus/
+RUN adduser -u 9999 -g 0 quarkus
 USER 9999
+RUN mkdir /home/quarkus/dev/
+WORKDIR /home/quarkus/dev/
 
-COPY pom.xml /home/quarkus/
-COPY src /home/quarkus/src
+COPY pom.xml /home/quarkus/dev/
+COPY src /home/quarkus/dev/src
 
-COPY *.sh /home/quarkus/
-RUN cd /home/quarkus/ && \
+RUN cd /home/quarkus/dev/ && \
     # Running Maven once during container creation already pre-loads Maven dependencies
     # into ~/.m2, which is very useful to start faster when this dev container will start IRL.
     mvn clean compile dependency:go-offline dependency:resolve-plugins && \
@@ -40,6 +40,7 @@ RUN cd /home/quarkus/ && \
     kill %1
 
 # https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
+COPY mvn-run-dev.sh /home/quarkus/
 USER root
 RUN mv /home/quarkus/mvn-run-dev.sh /usr/local/bin
 RUN chgrp -R 0 /home/quarkus && \
