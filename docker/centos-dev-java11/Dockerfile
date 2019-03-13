@@ -34,11 +34,12 @@ RUN cd /home/quarkus-dev/ && \
 
 # https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
 USER root
+RUN mv /home/quarkus-dev/mvn-run-dev.sh /usr/local/bin
 RUN chgrp -R 0 /home/quarkus-dev && \
     chmod -R g=u /home/quarkus-dev
 USER 1001
 
-CMD ["bash", "-c", "/home/quarkus-dev/mvn-run-dev.sh"]
+CMD ["bash", "-c", "/usr/local/bin/mvn-run-dev.sh"]
 
 EXPOSE 8080
 
