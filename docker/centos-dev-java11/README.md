@@ -39,7 +39,7 @@ You can map local code into this container, just to avoiding having to have a JV
     git clone https://github.com/quarkusio/quarkus-quickstarts
     cd quarkus-quickstarts/getting-started
 
-    docker run --rm -it -p 8080:8080 -v $(pwd):/home/quarkus/:z -u `id -u $USER`:`id -g $USER` quarkus-dev
+    docker run --rm -it -p 8080:8080 -v $(pwd):/home/quarkus/dev/:z -u `id -u $USER`:`id -g $USER` quarkus-dev
 
 NB: The `z` suffix -v mount flag and `-u` option are required to correctly map the file ownership in/out of the container.
 

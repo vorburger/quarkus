@@ -44,7 +44,9 @@ COPY mvn-run-dev.sh /home/quarkus/
 USER root
 RUN mv /home/quarkus/mvn-run-dev.sh /usr/local/bin
 RUN chgrp -R 0 /home/quarkus && \
-    chmod -R g=u /home/quarkus
+    chmod -R g=u /home/quarkus && \
+    # This is not for OpenShift, but so that "docker run -v ...:z -u ..." works:
+    chmod -R a+rwx /home/quarkus
 USER 9999
 
 CMD ["bash", "-c", "/usr/local/bin/mvn-run-dev.sh"]
