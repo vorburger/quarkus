@@ -17,7 +17,6 @@ RUN yum -y update && \
     ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
 ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 ENV JAVA_HOME /etc/alternatives/java_sdk
 
 RUN adduser -u 9999 -g 0 quarkus
